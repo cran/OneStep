@@ -1,0 +1,17 @@
+Package: OneStep
+Type: Package
+Title: One-Step Maximum Likelihood Estimation
+Version: 0.9.0
+Author: Alexandre Brouste, Darel Noutsa Mieniedou, Christophe Dutang
+Maintainer: Christophe Dutang <christophe.dutang@ensimag.fr>
+Contact: Alexandre Brouste, Darel Noutsa Mieniedou, Christophe Dutang
+        <onestep@univ-lemans.fr>
+Description: Provide principally an eponymic function that numerically computes the Le Cam one-step estimator which is asymptotically efficient (see e.g. L. Le Cam (1956) <https://projecteuclid.org/euclid.bsmsp/1200501652>) and can be computed faster than the maximum likelihood estimator.
+License: GPL (>= 2)
+Encoding: UTF-8
+Depends: fitdistrplus, numDeriv
+Suggests: actuar
+NeedsCompilation: no
+Packaged: 2020-07-11 05:46:06 UTC; dutang
+Repository: CRAN
+Date/Publication: 2020-07-13 10:00:06 UTC

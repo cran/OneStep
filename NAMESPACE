@@ -1,0 +1,7 @@
+
+importFrom("numDeriv", "grad", "hessian")
+importFrom("fitdistrplus", "mledist", "mmedist")
+importFrom("stats", "var", "weights", "cov2cor")
+importFrom("utils", "data")
+    
+export("onestep", "benchonestep")
