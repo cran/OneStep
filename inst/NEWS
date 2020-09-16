@@ -1,0 +1,10 @@
+=== OneStep: One-Step Estimation ===
+
+Version 0.9.1
+=============
+BUG FIX
+- bug fixed in onestep_closedformula() for Weibull distribution.
+
+Version 0.9.0
+=============
+- Initial CRAN release.

@@ -96,9 +96,9 @@ The Le Cam one-step estimation procedure is based on an initial sequence of gues
 \references{
 L. Le Cam (1956). 
 \emph{On the asymptotic theory of estimation and testing hypothesis}. 
-In: Proceedings of 3rd Berkeley Symposium I,  pages 355–368.
+In: Proceedings of 3rd Berkeley Symposium I,  pages 355-368.
 
-K. Kamatani and M. Uchida (2015). \emph{Hybrid multi-step estimators for stochastic differential equations based on sampled data}. Stat Inference Stoch Process,  18(2),  pages 177–204. 
+K. Kamatani and M. Uchida (2015). \emph{Hybrid multi-step estimators for stochastic differential equations based on sampled data}. Stat Inference Stoch Process,  18(2),  pages 177-204. 
 
 }
 \author{

@@ -126,7 +126,7 @@ onestep_closedformula  <-  function(data, distname, control, ...)
     Score[1,1] <- mean(1/shape+ log(rate)+log(data)-log(rate*data)*(rate*data)^shape)
     Score[2,1] <- mean(shape/rate-shape*(data^shape)*rate^(shape-1))
     
-    I[1,1] <-  1/shape^2*(trigamma(1)+digamma(2))
+    I[1,1] <-  1/shape^2*(trigamma(1)+digamma(2)^2)
     I[2,1] <-  1/rate*digamma(2) 
     I[1,2] <-  1/rate*digamma(2)  
     I[2,2] <-  shape^2/rate^2

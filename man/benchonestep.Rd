@@ -31,7 +31,7 @@ corresponding distribution function pname must be classically defined.}
 \references{
 L. LeCam (1956). 
 \emph{On the asymptotic theory of estimation and testing hypothesis}. 
-In: Proceedings of 3rd Berkeley Symposium I, pages 355–368.
+In: Proceedings of 3rd Berkeley Symposium I, pages 355-368.
 }
 \author{
 Alexandre Brouste, Darel Noutsa Mieniedou, Christophe Dutang

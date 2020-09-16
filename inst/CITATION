@@ -1,0 +1,14 @@
+citHeader("To cite OneStep in publications use:")
+
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{OneStep}: One-step Estimation",
+         author = c(person("Brouste", "Alexandre"),
+                    person("Noutsa Mieniedou", "Darel"),
+                    person("Dutang", "Christophe")),
+         year = year,
+         note = note,
+         url = "https://CRAN.R-project.org/package=OneStep")
