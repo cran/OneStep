@@ -10,7 +10,8 @@ onestep <- function(data, distr, method, init, weights=NULL,
   }	 
   
   distlist <- c("norm", "exp", "lnorm", "invgauss", "pois", "geom", "gamma","cauchy", 
-                "nbinom", "beta", "unif", "logis","weibull","pareto")
+                "nbinom", "beta", "unif", "logis","weibull","pareto","chisq")
+  
   if(missing(method))
   {
     if(distname %in% distlist)
@@ -26,7 +27,7 @@ onestep <- function(data, distr, method, init, weights=NULL,
   
   method <- match.arg(method, c("closed formula", "numeric"))
   #control parameters : param_t is the value at which the characteristic function is evaluated
-  con <- list(param_t = 0.3, delta=0.8)
+  con <- list(delta=0.9)
   con[(namc <- names(control))] <- control
   
   if (is.element(distname, distlist) && method != "closed formula")
@@ -39,18 +40,31 @@ onestep <- function(data, distr, method, init, weights=NULL,
   if (!exists(ddistname, mode = "function")) 
     stop(paste("The ", ddistname, " function must be defined"))
   
+  #check argument data
+  if (!(is.vector(data) & is.numeric(data) & length(data)>1))
+    stop("data must be a numeric vector of length greater than 1")
+  
+  #check inconsistent initial parameters
+  if(!missing(init))
+  {
+    hasnodefaultval <- sapply(formals(ddistname), is.name)
+    arg_startfix <- checkparamlist(start.arg=init, fix.arg=NULL, 
+      argdistname=argddistname, hasnodefaultval=hasnodefaultval)
+  }
+  
+  #to be removed?
   obs <- data
   n <- length(obs)
   
   #compute one-step estimator
   if (method == "closed formula") 
   {
-    res <- onestep_closedformula(data=obs, distname=distname, control=con, ...)
+    res <- onestep_closedformula(data=obs, distname=distname,control=con, init=init, ...)
     
   }else if(method == "numeric") 
   {  
     res <- onestep_generic(obs=obs, distname=distname, ddistname=ddistname, 
-                           argddistname=argddistname, control=con, ...)
+                           argddistname=argddistname, control=con, init=init,...)
     
   }else
     stop("wrong method")

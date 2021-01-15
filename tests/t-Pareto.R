@@ -1,10 +1,11 @@
 library(OneStep)
 library(actuar)
 
+
 n<-200
 theta <- c(1.5,0.5)
 
-M<-100
+M <- 100
 M <- 5
 
 f <- function()
@@ -15,14 +16,11 @@ f <- function()
 
 resall <- replicate(M, f())  
   
-tabMLE <- resall[1:2,"mle",]
-tabLCE <- resall[1:2,"onestep",]
-
 
 ###Visualisation et Information de Fisher
 
-res<-sqrt(n)*(tabMLE-matrix(rep(theta,M),2,M))
-res3<-sqrt(n)*(tabLCE-matrix(rep(theta,M),2,M))
+resMLE<-sqrt(n)*(resall[1:2,"mle",] - matrix(rep(theta,M),2,M))
+resLCE<-sqrt(n)*(resall[1:2,"onestep",] - matrix(rep(theta,M),2,M))
 
 
 tabtime<-t(resall[3,,])
@@ -56,26 +54,18 @@ Sigma<-Jinv%*%A%*%t(Jinv)
 
 
 layout(matrix(1:4,2,2,byrow=TRUE))
-hist(res[1,],freq=FALSE,nclass=40,xlim=c(-3,3),ylim=c(0,0.8),main="MLE theta1",xlab="")
+hist(resMLE[1,],freq=FALSE,nclass=40,xlim=c(-3,3),ylim=c(0,0.8),main="MLE theta1",xlab="")
 x<-seq(-3,3,length=100)
 y<-dnorm(x,mean=0,sd=sqrt(covlim[1,1]))
 lines(x,y,col="red")
-#hist(res2[1,],freq=FALSE,nclass=40,xlim=c(-3,3),ylim=c(0,0.8),main="ME theta1",xlab="")
-#lines(x,y,col="red")
-#y2<-dnorm(x,mean=0,sd=sqrt(Sigma[1,1]))
-#lines(x,y2,col="blue")
-hist(res3[1,],freq=FALSE,nclass=40,xlim=c(-3,3),ylim=c(0,0.8),main="LCE theta1",xlab="")
+hist(resLCE[1,],freq=FALSE,nclass=40,xlim=c(-3,3),ylim=c(0,0.8),main="LCE theta1",xlab="")
 lines(x,y,col="red")
 
-hist(res[2,],freq=FALSE,nclass=40,xlim=c(-8,8),ylim=c(0,0.25),main="MLE theta2",xlab="")
+hist(resMLE[2,],freq=FALSE,nclass=40,xlim=c(-8,8),ylim=c(0,0.25),main="MLE theta2",xlab="")
 x<-seq(-10,10,length=100)
 y<-dnorm(x,mean=0,sd=sqrt(covlim[2,2]))
 lines(x,y,col="red")
-#hist(res2[2,],freq=FALSE,nclass=40,xlim=c(-8,8),ylim=c(0,0.25),main="ME theta2",xlab="")
-#lines(x,y,col="red")
-#y2<-dnorm(x,mean=0,sd=sqrt(Sigma[2,2]))
-#lines(x,y2,col="blue")
-hist(res3[2,],freq=FALSE,nclass=40,xlim=c(-8,8),ylim=c(0,0.25),main="LCE theta2",xlab="")
+hist(resLCE[2,],freq=FALSE,nclass=40,xlim=c(-8,8),ylim=c(0,0.25),main="LCE theta2",xlab="")
 y<-dnorm(x,mean=0,sd=sqrt(covlim[2,2]))
 lines(x,y,col="red")
 

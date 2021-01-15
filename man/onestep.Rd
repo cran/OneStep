@@ -12,14 +12,13 @@ onestep(data, distr, method, init, weights = NULL,
 }
 \arguments{
   \item{data}{A numeric vector of length \code{n}}
-  \item{distr}{	
-A character string \code{"name"} naming a distribution for 
-which the corresponding density function dname and the 
-corresponding distribution function pname must be classically defined.}
+  \item{distr}{A character string \code{"name"} naming a distribution for 
+  which the corresponding density function dname and the 
+  corresponding distribution function pname must be classically defined.}
   \item{method}{A character string coding for the fitting method:
     \code{"closed formula"} for explicit one-step and 
     \code{"numeric"} for numeric computation. The default method is the \code{"closed formula"}.}
-  \item{init}{A character vector for the intial guess method.}
+  \item{init}{A named list for the user initial guess estimation.}
   \item{weights}{an optional vector of weights to compute the final likelihood. 
   Should be \code{NULL} or a numeric vector with strictly positive integers 
   (typically the number of occurences of each observation).}
@@ -95,14 +94,28 @@ The Le Cam one-step estimation procedure is based on an initial sequence of gues
 }
 \references{
 L. Le Cam (1956). 
-\emph{On the asymptotic theory of estimation and testing hypothesis}. 
-In: Proceedings of 3rd Berkeley Symposium I,  pages 355-368.
+\emph{On the asymptotic theory of estimation and testing hypothesis}, 
+In: Proceedings of 3rd Berkeley Symposium I, 355-368.
 
-K. Kamatani and M. Uchida (2015). \emph{Hybrid multi-step estimators for stochastic differential equations based on sampled data}. Stat Inference Stoch Process,  18(2),  pages 177-204. 
+I.A. Koutrouvelis (1982). \emph{Estimation of Location and Scale in 
+Cauchy Distributions Using the Empirical Characteristic Function}, 
+Biometrika, 69(1), 205-213.
+
+U. Grenander (1965). \emph{Some direct estimates of the mode}, 
+Annals of Mathematical Statistics, 36, 131-138. 
+
+K. Kamatani and M. Uchida (2015). \emph{Hybrid multi-step estimators 
+for stochastic differential equations based on sampled data},
+Stat Inference Stoch Process, 18(2), 177-204. 
+
+Ye and Chen (2017). \emph{Closed-Form Estimators for the Gamma 
+Distribution Derived From Likelihood Equations}, 
+The American Statistician, 71(2), 177-181.
+
 
 }
 \author{
-Alexandre Brouste, Darel Noutsa Mieniedou, Christophe Dutang
+Alexandre Brouste, Christophe Dutang, Darel Noutsa Mieniedou 
 }
 
 \seealso{
@@ -110,18 +123,70 @@ See Also as \code{\link{mledist}} and \code{\link{fitdist}} in fitdistrplus.
 }
 \examples{
 n <- 1000
+set.seed(1234)
 
-#Gamma
+##1. Gamma
 
 theta <- c(2, 3)
 o.sample <- rgamma(n, shape=theta[1], rate=theta[2])
-onestep(o.sample, "gamma")
 
-#Beta
+#Default method
+onestep(o.sample, "gamma") 
+
+#User initial sequence of guess estimator
+# See : Ye and Chen (2017)
+
+qtmp<- sum(o.sample*log(o.sample))-sum(log(o.sample))*mean(o.sample)
+alphastar<-sum(o.sample)/qtmp
+betastar<-qtmp/length(o.sample)
+thetastar<-list(shape=alphastar,rate=1/betastar)  
+  
+onestep(o.sample, "gamma", init=thetastar) 
+
+#Numerical method (for comparison)
+onestep(o.sample, "gamma", method="numeric")
+
+##2.Beta
 
 theta <- c(0.5, 1.5)
 o.sample <- rbeta(n, shape1=theta[1], shape2=theta[2])
 onestep(o.sample, "beta")
+
+##3. Cauchy
+
+theta <- c(2, 3)
+o.sample <- rcauchy(n, location=theta[1], scale=theta[2])
+onestep(o.sample, "cauchy")
+
+#User initial sequence of guess estimator
+#See Koutrouvelis (1982).
+
+t<-1/4
+Phi <- mean(exp(1i*t*o.sample))
+S <- Re(Phi)
+Z <- Im(Phi)
+thetastar<-list(location=atan(Z/S)/t,scale=-log(sqrt(S^2+Z^2))/t)
+onestep(o.sample, "cauchy", init=thetastar) 
+
+
+##Chi2
+
+theta<-5
+o.sample<-rchisq(n,df=theta)
+onestep(o.sample,"chisq")
+
+#User initial sequence of guess estimator
+#See Grenander (1965).
+
+p<-n^(2/7)
+k<-floor(n^(3/5))
+Dstar<-sort(o.sample)
+Dk1 <- Dstar[(1+k):n]
+Dk2 <- Dstar[1:(n-k)]
+sigma.star<-1/2*sum((Dk1+Dk2)*(Dk1-Dk2)^(-p))/sum((Dk1-Dk2)^(-p))+2
+
+onestep(o.sample,"chisq",init=list(df=sigma.star))
+
 
 #Negative Binomial
 
@@ -130,12 +195,6 @@ o.sample <- rnbinom(n, size=theta[1], mu=theta[2])
 onestep(o.sample, "nbinom")
 
 
-#Cauchy
-
-theta <- c(2, 3)
-o.sample <- rcauchy(n, location=theta[1], scale=theta[2])
-onestep(o.sample, "cauchy", control = list(param_t=0.3))
-
 #Generic (dweibull2)
 
 theta <- c(0.8, 3)
@@ -143,6 +202,7 @@ dweibull2 <- function(x, shape, scale, log=FALSE)
   dweibull(x = x, shape = shape, scale = scale, log = log)
 
 o.sample <- rweibull(n, shape = theta[1], scale = 1/theta[2])
-onestep(o.sample,  "weibull2",  method="numeric",  start=list(shape=1,  scale=1))
+onestep(o.sample, "weibull2", method="numeric",  
+  init=list(shape=1,  scale=1))
 }
 \keyword{ distribution }

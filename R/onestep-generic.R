@@ -1,10 +1,7 @@
-onestep_generic <- function(obs, distname, ddistname, argddistname, control, ...)
+onestep_generic <- function(obs, distname, ddistname, argddistname, control, init=init,...)
 {
   n <- length(obs)
-  delta <- control$delta
-  if(is.null(delta))
-    stop("wrong delta parameter")
-  
+
   # generic definition of the log-likelihood => weights not taken into account
   if ("log" %in% argddistname) 
   {
@@ -20,17 +17,27 @@ onestep_generic <- function(obs, distname, ddistname, argddistname, control, ...
     }
   }
   
-  #initial guess on a small subset of the original data
-  ndelta <- as.integer(n^(delta))
-  idxsubsample <- sample(1:n, ndelta, replace=FALSE)
+  if(!missing(init)){
+    
+    thetabar <- unlist(init)
   
-  resShortMLE <- try( mledist(data = obs[idxsubsample], distr = distname, ...) )
-  if(inherits(resShortMLE, "try-error"))
-  {
-    return(list(estimate = NULL, convergence = 10, method = "numeric",
+  }else{
+    
+      #initial guess on a small subset of the original data
+      delta <- control$delta
+      if(is.null(delta))
+        stop("wrong delta parameter")
+      ndelta <- as.integer(n^(delta))
+      idxsubsample <- sample(1:n, ndelta, replace=FALSE)
+  
+      resShortMLE <- try( mledist(data = obs[idxsubsample], distr = distname, ...) )
+      if(inherits(resShortMLE, "try-error"))
+        {
+            return(list(estimate = NULL, convergence = 10, method = "numeric",
                 optim.message = "Initial guess cannot be estimated by MLE on a subsample"))
+        }
+      thetabar <- resShortMLE$estimate
   }
-  thetabar <- resShortMLE$estimate
   
   #score definition
   Scorechap <- try( grad(fnobj, thetabar, obs=obs, ddistnam=ddistname) )
@@ -48,7 +55,7 @@ onestep_generic <- function(obs, distname, ddistname, argddistname, control, ...
                 optim.message = "Hessian at initial guess cannot be estimated"))
   }
   
-  #onestep
+  #Compute one step of the Newton method
   step <- try( solve(Ichap, Scorechap) )
   if(inherits(step, "try-error"))
   {
@@ -57,6 +64,9 @@ onestep_generic <- function(obs, distname, ddistname, argddistname, control, ...
     optim.message <- "Step cannot be computed"
   }else
   {
+    #print(step)
+    #print(Ichap)
+    #print(Scorechap)
     estimate <- thetabar - step
     convergence <- 0
     optim.message <- NULL

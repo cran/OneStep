@@ -1,7 +1,8 @@
 
 importFrom("numDeriv", "grad", "hessian")
 importFrom("fitdistrplus", "mledist", "mmedist")
-importFrom("stats", "var", "weights", "cov2cor")
+importFrom("stats", "var", "weights", "cov2cor", "lm", "quantile")
 importFrom("utils", "data")
+importFrom("parallel", "makeCluster", "parLapply", "stopCluster")
     
-export("onestep", "benchonestep")
+export("onestep", "benchonestep", "benchonestep.replicate")
