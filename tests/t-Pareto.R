@@ -1,7 +1,6 @@
 library(OneStep)
 library(actuar)
 
-
 n<-200
 theta <- c(1.5,0.5)
 
@@ -16,7 +15,6 @@ f <- function()
 
 resall <- replicate(M, f())  
   
-
 ###Visualisation et Information de Fisher
 
 resMLE<-sqrt(n)*(resall[1:2,"mle",] - matrix(rep(theta,M),2,M))

@@ -62,6 +62,9 @@ The Le Cam one-step estimation procedure is based on an initial sequence of gues
         and \code{\link{cdfcomp}}. }
     
     \item{weights}{the vector of weigths used in the estimation process or \code{NULL}.}    
+    \item{nbstep}{the number of Newton step, 0 for closed-form MLE, 
+      1 for one-step estimators and 2 for two-step estimators.}
+    \item{delta}{delta parameter (used for sub-sample guess estimator).}  
 
     Generic functions inheriting from \code{"fitdist"} objects:
   \describe{       
@@ -108,7 +111,7 @@ K. Kamatani and M. Uchida (2015). \emph{Hybrid multi-step estimators
 for stochastic differential equations based on sampled data},
 Stat Inference Stoch Process, 18(2), 177-204. 
 
-Ye and Chen (2017). \emph{Closed-Form Estimators for the Gamma 
+Z.-S. Ye and N. Chen (2017). \emph{Closed-Form Estimators for the Gamma 
 Distribution Derived From Likelihood Equations}, 
 The American Statistician, 71(2), 177-181.
 
@@ -136,10 +139,10 @@ onestep(o.sample, "gamma")
 #User initial sequence of guess estimator
 # See : Ye and Chen (2017)
 
-qtmp<- sum(o.sample*log(o.sample))-sum(log(o.sample))*mean(o.sample)
-alphastar<-sum(o.sample)/qtmp
-betastar<-qtmp/length(o.sample)
-thetastar<-list(shape=alphastar,rate=1/betastar)  
+qtmp <- sum(o.sample*log(o.sample))-sum(log(o.sample))*mean(o.sample)
+alphastar <- sum(o.sample)/qtmp
+betastar <- qtmp/length(o.sample)
+thetastar <- list(shape=alphastar,rate=1/betastar)  
   
 onestep(o.sample, "gamma", init=thetastar) 
 
@@ -161,29 +164,29 @@ onestep(o.sample, "cauchy")
 #User initial sequence of guess estimator
 #See Koutrouvelis (1982).
 
-t<-1/4
+t <- 1/4
 Phi <- mean(exp(1i*t*o.sample))
 S <- Re(Phi)
 Z <- Im(Phi)
-thetastar<-list(location=atan(Z/S)/t,scale=-log(sqrt(S^2+Z^2))/t)
+thetastar <- list(location=atan(Z/S)/t,scale=-log(sqrt(S^2+Z^2))/t)
 onestep(o.sample, "cauchy", init=thetastar) 
 
 
 ##Chi2
 
-theta<-5
-o.sample<-rchisq(n,df=theta)
+theta <- 5
+o.sample <- rchisq(n,df=theta)
 onestep(o.sample,"chisq")
 
 #User initial sequence of guess estimator
 #See Grenander (1965).
 
-p<-n^(2/7)
-k<-floor(n^(3/5))
-Dstar<-sort(o.sample)
+p <- n^(2/7)
+k <- floor(n^(3/5))
+Dstar <- sort(o.sample)
 Dk1 <- Dstar[(1+k):n]
 Dk2 <- Dstar[1:(n-k)]
-sigma.star<-1/2*sum((Dk1+Dk2)*(Dk1-Dk2)^(-p))/sum((Dk1-Dk2)^(-p))+2
+sigma.star <- 1/2*sum((Dk1+Dk2)*(Dk1-Dk2)^(-p))/sum((Dk1-Dk2)^(-p))+2
 
 onestep(o.sample,"chisq",init=list(df=sigma.star))
 

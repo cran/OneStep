@@ -2,9 +2,8 @@
 require(OneStep)
 
 n <- 1e3
-
-
 x <- rexp(n)
+
 try(onestep(matrix(x, 4, n/4), "exp"))
 
 try(onestep(x[1], "exp"))

@@ -1,8 +1,15 @@
 
 importFrom("numDeriv", "grad", "hessian")
 importFrom("fitdistrplus", "mledist", "mmedist")
-importFrom("stats", "var", "weights", "cov2cor", "lm", "quantile")
-importFrom("utils", "data")
+importFrom("stats", "var", "weights", "cov2cor", "lm", "quantile", "integrate", "optim", "rbinom", 
+           "rexp", "rpois", "IQR", "coef", "dt", "median", "optimize")
+importFrom("utils", "data", "head", "str")
 importFrom("parallel", "makeCluster", "parLapply", "stopCluster")
+importFrom("graphics", "hist", "lines", "legend")
+importFrom("extraDistr", "dlst", "plst", "rlst")
     
+#one step of parametric iid models
 export("onestep", "benchonestep", "benchonestep.replicate")
+
+
+
