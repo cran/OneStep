@@ -1,3 +1,8 @@
+# OneStep - Version 0.9.4
+
+- add README
+- remove NOTEs
+
 # OneStep - Version 0.9.3
 
 ## NEW

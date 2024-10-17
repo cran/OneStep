@@ -1,4 +1,4 @@
-f4d285c196d1796252dc346cdaaf4d71 *DESCRIPTION
+026b386a543686211528e047c2430582 *DESCRIPTION
 ade154aab8651274097ee3fa13669be1 *NAMESPACE
 bfecf3790cc05d1b9d7f929d98a3f37a *R/benchonestep-replicate.R
 9c66738c3c268047e5c364048f20f684 *R/benchonestep.R
@@ -6,12 +6,13 @@ ba603d91e685680387fd57559852c440 *R/onestep-closedform.R
 d2ad8b89eac0d8fae4344071813eb645 *R/onestep-generic.R
 c3b653f575fad021a3a4440d4c6612e5 *R/onestep.R
 f505f5e41e75c66161215e5029f4101d *R/util-checkparamlist.R
-e175e5861fe15feb2104717158cda4a1 *build/partial.rdb
-d313003ed9b057e7e657d61bdd4f38d8 *inst/CITATION
-62bcdec969bddf6856f975e5c12f1e43 *inst/NEWS.md
+17e1734741ae42fba6472771ffc2050d *README.md
+07ab3c28d49aced714ef66ed3bbb0240 *build/partial.rdb
+466c25b85cdeb31af682a5637a58f703 *inst/CITATION
+fc19b98c8c73fd598d22789780e2994a *inst/NEWS.md
 48cb326f2f89662767bc20e96605c94d *man/OneStep-package.Rd
 04fda260c4052989963771aec8fc6e33 *man/benchonestep.Rd
-0a593c217c8ada65caa1280713757aa3 *man/onestep.Rd
+68cd28d9c0ef1aa53ce614e7c1799e52 *man/onestep.Rd
 99c86ea2355911d80b32ffb9398b3a3d *tests/t-Beta.R
 a49d3b9ee4513a6c5b120efc4ee3085c *tests/t-Pareto.R
 2d54103c46a0b964002d73f293b16e32 *tests/t-benchonestep-4-closeform.R

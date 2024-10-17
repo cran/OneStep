@@ -29,7 +29,7 @@ onestep(data, distr, method, init, weights = NULL,
   \code{param_t} is used when the characteristic function is needed,
   \code{delta} is used when the subsample of size \code{n^delta} is randomly selected
   for the initial guess in the generic Le Cam's one step method.}
-  \item{\dots}{further arguments passe to \code{\link{mledist}} in case it is used.}
+  \item{\dots}{further arguments passe to \code{\link[fitdistrplus]{mledist}} in case it is used.}
 }
 \details{
 
@@ -58,8 +58,8 @@ The Le Cam one-step estimation procedure is based on an initial sequence of gues
         \code{0} indicates successful convergence (from explicit formula or not).
         \code{10} indicates an error.}    
     \item{discrete}{ the input argument or the automatic definition by the function to be passed
-        to functions \code{\link{gofstat}},  \code{\link{plotdist}} 
-        and \code{\link{cdfcomp}}. }
+        to functions \code{\link[fitdistrplus]{gofstat}},  \code{\link[fitdistrplus]{plotdist}} 
+        and \code{\link[fitdistrplus]{cdfcomp}}. }
     
     \item{weights}{the vector of weigths used in the estimation process or \code{NULL}.}    
     \item{nbstep}{the number of Newton step, 0 for closed-form MLE, 
@@ -79,12 +79,12 @@ The Le Cam one-step estimation procedure is based on an initial sequence of gues
     }
     \item{\code{plot}}{
     The plot of an object of class "onestep" returned by \code{fitdist} uses the function 
-    \code{\link{plotdist}}. An object of class "onestep" or a list of objects of class
+    \code{\link[fitdistrplus]{plotdist}}. An object of class "onestep" or a list of objects of class
     "onestep" corresponding to various fits using the same data set may also be plotted
-    using a cdf plot (function \code{\link{cdfcomp}}), 
-    a density plot(function \code{\link{denscomp}}), 
-    a density Q-Q plot (function \code{\link{qqcomp}}), 
-    or a P-P plot (function \code{\link{ppcomp}}).
+    using a cdf plot (function \code{\link[fitdistrplus]{cdfcomp}}), 
+    a density plot(function \code{\link[fitdistrplus]{denscomp}}), 
+    a density Q-Q plot (function \code{\link[fitdistrplus]{qqcomp}}), 
+    or a P-P plot (function \code{\link[fitdistrplus]{ppcomp}}).
     }
     \item{\code{logLik}}{ Extracts the estimated log-likelihood from the \code{"onestep"} object.
     }
@@ -122,7 +122,7 @@ Alexandre Brouste, Christophe Dutang, Darel Noutsa Mieniedou
 }
 
 \seealso{
-See Also as \code{\link{mledist}} and \code{\link{fitdist}} in fitdistrplus.
+See Also as \code{\link[fitdistrplus]{mledist}} and \code{\link[fitdistrplus]{fitdist}} in fitdistrplus.
 }
 \examples{
 n <- 1000

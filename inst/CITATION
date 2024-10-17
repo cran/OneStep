@@ -1,7 +1,7 @@
-p1 <- person("Brouste", "Alexandre")
-p2 <- person("Dutang", "Christophe")
-p3 <- person("Noutsa Mieniedou", "Darel")
-
+p1 <- person("Alexandre", "Brouste")
+p2 <- person("Christophe", "Dutang")
+p3 <- person("Darel", "Noutsa Mieniedou")
+             
 citHeader("To cite OneStep in publications use:")
 
 bibentry(bibtype = "Article",
